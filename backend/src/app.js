@@ -24,20 +24,29 @@ const allowedOrigins = new Set([
   // Vercel project domain
   "https://blood-connect-git-main-codecrafter1316s-projects.vercel.app",
 
-  // Vercel deployment domain
-  "https://blood-connect-74ax01p6k-codecrafter1316s-projects.vercel.app",
+  // Known Vercel deployment domain
+  "https://blood-connect-74ax01px-codecrafter1316s-projects.vercel.app",
 ]);
 
 app.use(
   cors({
     origin: (origin, callback) => {
       // Allow requests without an Origin header
-      // (Postman, server-to-server requests, etc.)
+      // Example: Postman, curl, server-to-server requests
       if (!origin) {
         return callback(null, true);
       }
 
+      // Allow explicitly registered origins
       if (allowedOrigins.has(origin)) {
+        return callback(null, true);
+      }
+
+      // Allow Vercel preview deployments
+      if (
+        origin.startsWith("https://blood-connect-") &&
+        origin.endsWith(".vercel.app")
+      ) {
         return callback(null, true);
       }
 
