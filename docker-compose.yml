@@ -1,0 +1,18 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: bloodconnect-mysql
+    restart: unless-stopped
+
+    environment:
+      MYSQL_ROOT_PASSWORD: bloodconnect_root
+      MYSQL_DATABASE: bloodconnect
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - bloodconnect_mysql_data:/var/lib/mysql
+
+volumes:
+  bloodconnect_mysql_data:
